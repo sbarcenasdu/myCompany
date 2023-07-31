@@ -1,0 +1,174 @@
+<div class="container mb-3">
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+      <svg class="bi me-2" width="40" height="32">
+        <use xlink:href="#bootstrap" />
+      </svg>
+      <span class="fs-4">My Company</span>
+    </a>
+
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Inicio</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Productos</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Precios</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Acerca de</a></li>
+    </ul>
+  </header>
+</div>
+
+<div class="container">
+  <h3>Tabla de Productos</h3>
+  <table class="table table-striped ">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre producto</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of dataProducts">
+        <th scope="row">{{item.id}}</th>
+        <td>{{item.name}}</td>
+        <td>{{item.description}}</td>
+        <td>{{item.valor}}</td>
+        <td>
+          <button class="btn btn-info btn-sm mx-1" (click)="openModalItem(item)" data-bs-toggle="modal"
+            data-bs-target="#exampleModal2"><i class="fa-solid fa-circle-info"></i></button>
+          <button class="btn btn-info btn-sm mx-1" (click)="openModalItem(item)" data-bs-toggle="modal"
+            data-bs-target="#exampleModal"><i class="fa-regular fa-pen-to-square"></i></button>
+          <button class="btn btn-danger btn-sm mx-1" (click)="eliminarItem(item)"><i
+              class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="modal inmodal" tabindex="-1" role="dialog" aria-hidden="true" id="modalActualizarItem">
+  <div class="modal-dialog">
+    <div class="modal-content animated flipInY">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+            class="sr-only">Close</span></button>
+        <h4 class="modal-title">Actualizar usuario</h4>
+      </div>
+      <div class="modal-body">
+        <form class="m-t" role="form" [formGroup]="actualizarItemForm" autocomplete="off">
+          <!--<div class="form-group">
+                      <input type="hidden" formControlName="userId" class="form-control" placeholder="Codigo interno de usuario">
+                  </div>-->
+          <div class="form-group">
+            <input type="text" formControlName="name" class="form-control" placeholder="Nombre completo">
+          </div>
+          <div class="form-group">
+            <input type="text" formControlName="description" class="form-control" placeholder="Usuario">
+          </div>
+          <div class="form-group">
+            <input type="email" formControlName="valor" class="form-control" placeholder="Email">
+          </div>
+          <!--                   <div class="text-danger">
+                    <p *ngIf="campoNoValido('nombre')">*El Nombre es obligatorio.</p>
+                    <p *ngIf="campoNoValido('usuario')">*El Usuario es obligatorio.</p>
+                    <p *ngIf="campoNoValido('email')">*El Email es obligatorio.</p>
+                    <p *ngIf="campoNoValido('estado')">*El Estado es obligatorio.</p>
+                    <p *ngIf="campoNoValido('rol')">*El Rol es obligatorio.</p>
+                    <p *ngIf="campoNoValido('password')">*La contraseña es obligatoria.</p>
+                  </div> -->
+          <!--                   <div *ngIf="btnLoading" class="sk-spinner sk-spinner-circle">
+                    <div *ngFor="let spinrer of crearSpinner" class="sk-circle{{spinrer}} sk-circle"></div>
+                  </div> -->
+          <button type="submit" class="btn btn-primary block full-width m-b">Actualizar</button>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal" id="btnClose">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar detalles de producto</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="m-t" role="form" [formGroup]="actualizarItemForm" (submit)="actualizarItem()" autocomplete="off">
+          <div class="form-group">
+            <label for="itemId">ID:</label>
+            <input type="text" formControlName="itemId" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" formControlName="name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="description">Descripción:</label>
+            <input type="text" formControlName="description" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="valor">Valor:</label>
+            <input type="text" formControlName="valor" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="image">Imagen:</label>
+            <input type="text" formControlName="image" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary block full-width m-b">Actualizar</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Detalle de producto</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="m-t" role="form" [formGroup]="actualizarItemForm" autocomplete="off">
+          <div class="form-group">
+            <label for="itemId">ID:</label>
+            <input type="text" formControlName="itemId" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" formControlName="name" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="description">Descripción:</label>
+            <input type="text" formControlName="description" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="valor">Valor:</label>
+            <input type="text" formControlName="valor" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="image">Imagen:</label>
+            <input type="text" formControlName="image" class="form-control" readonly>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
